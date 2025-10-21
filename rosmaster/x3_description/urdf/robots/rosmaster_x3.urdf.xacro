@@ -71,33 +71,37 @@
 
   <gazebo>
       <plugin name="mecanum_controller" filename="libgazebo_ros_planar_move.so">
-          <robotNamespace>/</robotNamespace>
-          <commandTopic>cmd_vel</commandTopic>
-          <odometryTopic>odom</odometryTopic>
-          <odometryFrame>odom</odometryFrame>
-          <leftFrontJoint>front_left_joint</leftFrontJoint>
-          <rightFrontJoint>front_right_joint</rightFrontJoint>
-          <leftRearJoint>back_left_joint</leftRearJoint>
-          <rightRearJoint>back_right_joint</rightRearJoint>
-          <odometryRate>60.0</odometryRate>
-          <robotBaseFrame>base_link</robotBaseFrame>
+        <ros>
+          <namespace>/</namespace>
+          <remapping>cmd_vel:=x3/cmd_vel</remapping>
+          <remapping>odom:=odom</remapping>
+        </ros>
+        <update_rate>100</update_rate>
+        <publish_rate>10</publish_rate>
+        <publish_odom>true</publish_odom>
+        <publish_odom_tf>true</publish_odom_tf>
+        <odometry_frame>odom</odometry_frame>
+        <robot_base_frame>base_footprint</robot_base_frame>
+        <covariance_x>0.0001</covariance_x>
+        <covariance_y>0.0001</covariance_y>
+        <covariance_yaw>0.001</covariance_yaw>
       </plugin>
     </gazebo>
 
+
   <gazebo>
-      <plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
-          <ros>
-              <!-- Add namespace and remap the default topic -->
-              <namespace>$(arg robot_name)</namespace>
-              <remapping>odom:=p3d_ground_truth</remapping>
-          </ros>
-          <always_on>true</always_on>
-          <update_rate>30.0</update_rate>
-          <body_name>base_footprint</body_name>
-          <gaussian_noise>0.00</gaussian_noise>
-          <frame_name>world</frame_name>
-      </plugin>
-    </gazebo>
+    <plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
+      <ros>
+            <namespace>$(arg robot_name)</namespace>
+            <remapping>odom:=p3d_ground_truth</remapping>
+        </ros>
+        <always_on>true</always_on>
+        <update_rate>30.0</update_rate>
+        <body_name>base_footprint</body_name>
+        <gaussian_noise>0.00</gaussian_noise>
+        <frame_name>world</frame_name>
+    </plugin>
+  </gazebo>
 
 
 </robot>

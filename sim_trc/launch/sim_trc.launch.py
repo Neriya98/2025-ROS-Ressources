@@ -16,7 +16,7 @@ ARGUMENTS = [
             default_value='0.0',
             description='robot initial y'),
     DeclareLaunchArgument('z_init',
-            default_value='1.5',
+            default_value='0.8',
             description='robot initial z'),
     DeclareLaunchArgument('yaw_init',
             default_value='-1.57',
@@ -83,6 +83,7 @@ def generate_launch_description():
                         '-Y', spawn_yaw_val],
                         output='screen',
         parameters=[{'use_sim_time': use_sim_time}])
+    
 
     ld = LaunchDescription(ARGUMENTS)
     ld.add_action(gz_model)

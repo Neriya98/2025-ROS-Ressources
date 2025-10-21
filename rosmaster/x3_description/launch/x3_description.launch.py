@@ -32,5 +32,11 @@ def generate_launch_description():
             package='joint_state_publisher',
             executable='joint_state_publisher',
             name='joint_state_publisher',
-            parameters=[{'use_sim_time': use_sim_time}])
+            parameters=[{'use_sim_time': use_sim_time}]),
+        
+        Node(
+            package='x3_description',
+            executable='velocity_scaler.py',
+            name='velocity_scaler',
+            parameters=[{'use_sim_time': use_sim_time , 'angular_scale': 10.0}])
     ])

@@ -16,7 +16,7 @@ ARGUMENTS = [
             default_value='0.0',
             description='robot initial y'),
     DeclareLaunchArgument('z_init',
-            default_value='1.5',
+            default_value='0.8',
             description='robot initial z'),
     DeclareLaunchArgument('yaw_init',
             default_value='-1.57',
