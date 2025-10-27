@@ -43,9 +43,27 @@ def generate_launch_description():
     )
 
     gazebo_sim = ExecuteProcess(
-            cmd=['gazebo',  '-s', 'libgazebo_ros_init.so', '-s', 'libgazebo_ros_factory.so', world_file],
+            cmd=['gazebo',  '-s', 'libgazebo_ros_init.so', '-s', 'libgazebo_ros_factory.so', '-s', 'gzclient_skip=1', world_file,],
             output='screen')
     
+
+
+    ################### QR Code Scanner Nodes #######################
+    qr_detector_node = Node(
+        package='qr_code_scanner',
+        executable='qr_detector',
+        name='qr_detector_node',
+        output='screen',
+        parameters=[{'use_sim_time': use_sim_time}]
+    )
+
+    image_capturer_node = Node(
+        package='qr_code_scanner',
+        executable='image_capturer',
+        name='image_capturer_node',
+        output='screen',
+        parameters=[{'use_sim_time': use_sim_time}]
+
 
     ################### Add ROSMASTER X3 #######################
     x3_description_path = PathJoinSubstitution(
@@ -84,6 +102,7 @@ def generate_launch_description():
                         output='screen',
         parameters=[{'use_sim_time': use_sim_time}])
 
+
     ld = LaunchDescription(ARGUMENTS)
     ld.add_action(gz_model)
     ld.add_action(gazebo_sim)
@@ -91,4 +110,6 @@ def generate_launch_description():
     ld.add_action(teleop_node)
     ld.add_action(joy_node)
     ld.add_action(spawn_entity_cmd)
+    ld.add_action(qr_detector_node)
+    ld.add_action(image_capturer_node)
     return ld
